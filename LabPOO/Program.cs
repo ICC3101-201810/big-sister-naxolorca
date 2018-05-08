@@ -4,19 +4,47 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 namespace LabPOO
+
 {
+    public delegate bool RevisarCarro(List<Product>lista, Product prod);
+
+    [Serializable]
     class Program
     {
         public static List<Product> cart;
         public static List<Product> market;
+        
 
         static void Main(string[] args)
         {
+            
+
             cart = new List<Product>();
             market = new List<Product>();
+            List<Product> listaReceta = new List<Product>();
+            
+
+
             SupplyStore();
+            listaReceta.Add(market[8]);
+            listaReceta.Add(market[17]);
+            listaReceta.Add(market[17]);
+            listaReceta.Add(market[2]);
+            listaReceta.Add(market[13]);
+            listaReceta.Add(market[5]);
+            listaReceta.Add(market[20]);
+            listaReceta.Add(market[22]);
+            listaReceta.Add(market[19]);
+            listaReceta.Add(market[14]);
+            listaReceta.Add(market[6]);
+            listaReceta.Add(market[4]);
+            listaReceta.Add(market[10]);
+            listaReceta.Add(market[0]);
             while (true)
             {
                 PrintHeader();
@@ -26,6 +54,7 @@ namespace LabPOO
                 Console.WriteLine("\t3. Ver carrito");
                 Console.WriteLine("\t4. Pagar");
                 Console.WriteLine("\t5. Salir");
+                
                 while (true)
                 {
                     String answer = Console.ReadLine();
@@ -41,6 +70,7 @@ namespace LabPOO
                     }
                     else if (answer == "3")
                     {
+                        
                         PrintCart();
                         break;
                     }
@@ -51,6 +81,13 @@ namespace LabPOO
                     }
                     else if (answer == "5")
                     {
+                        IFormatter formatter = new BinaryFormatter();
+                        Stream stream = new FileStream("MyFile.bin",
+                                                 FileMode.Create,
+                                                 FileAccess.Write, FileShare.None);
+
+                        formatter.Serialize(stream, cart);
+                        stream.Close();
                         Environment.Exit(1);
                     }
                 }
@@ -101,7 +138,23 @@ namespace LabPOO
                 }
             }           
         }
-
+        public static void RevisarProducto(List<Product> listaReceta,Product product)
+        {
+            foreach (Product prop in listaReceta)
+            {
+                if (product == prop)
+                {
+                    listaReceta.Remove(prop);
+                }
+                else
+                {
+                    Console.WriteLine("Este producto no esta en la lista");
+                    break;
+                    
+                }
+            }
+        }
+        RevisarCarro Hermana = new RevisarCarro(RevisarProducto));
         public static void PrintCart()
         {
             PrintHeader();
@@ -131,6 +184,7 @@ namespace LabPOO
 
         public static bool AddToCart(Product product)
         {
+            Hermana();
             return product.Agregar(cart);
         }
 
