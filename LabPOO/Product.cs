@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace LabPOO
 {
+    [Serializable]
     public class Product
     {
         private string name;

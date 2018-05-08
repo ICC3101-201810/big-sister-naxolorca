@@ -154,7 +154,7 @@ namespace LabPOO
                 }
             }
         }
-        RevisarCarro Hermana = new RevisarCarro(RevisarProducto));
+        //RevisarCarro Hermana = new RevisarCarro(RevisarProducto();
         public static void PrintCart()
         {
             PrintHeader();
@@ -184,7 +184,7 @@ namespace LabPOO
 
         public static bool AddToCart(Product product)
         {
-            Hermana();
+            //Hermana();
             return product.Agregar(cart);
         }
 
