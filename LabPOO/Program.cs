@@ -32,9 +32,9 @@ namespace LabPOO
                 using (Stream stream = File.Open("MyFile.bin", FileMode.Open))
                 {
                     BinaryFormatter bin = new BinaryFormatter();
-
-                    cart = (List<Product>)bin.Deserialize(stream);
-                    
+                    try { cart = (List<Product>)bin.Deserialize(stream); }
+                    catch { }
+                      
                 }
             }
             catch (IOException)
