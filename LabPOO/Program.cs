@@ -27,8 +27,19 @@ namespace LabPOO
             cart = new List<Product>();
             market = new List<Product>();
             List<Product> listaReceta = new List<Product>();
-            
+            try
+            {
+                using (Stream stream = File.Open("MyFile.bin", FileMode.Open))
+                {
+                    BinaryFormatter bin = new BinaryFormatter();
 
+                    cart = (List<Product>)bin.Deserialize(stream);
+                    
+                }
+            }
+            catch (IOException)
+            {
+            }
 
             SupplyStore();
             listaReceta.Add(market[8]);
@@ -77,6 +88,14 @@ namespace LabPOO
                     else if (answer == "4")
                     {
                         Pay();
+                        cart.Clear();
+                        IFormatter formatter = new BinaryFormatter();
+                        Stream stream = new FileStream("MyFile.bin",
+                                                 FileMode.Create,
+                                                 FileAccess.Write, FileShare.None);
+
+                        formatter.Serialize(stream, cart);
+                        stream.Close();
                         break;
                     }
                     else if (answer == "5")
